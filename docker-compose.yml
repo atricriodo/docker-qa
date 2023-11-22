@@ -1,0 +1,26 @@
+version: '3'
+services:
+  server:
+    build:
+      context: .
+      dockerfile: Dockerfile-server #name of your server Dockerfile
+    ports:
+      - "8000:8080"
+         # port on which the containers will be interacting,
+         # this is not needed if we just want container interaction.
+         # Useful if host also needs to interact
+    networks:
+      - mynetwork #Docker network through which both container can interact
+
+  client:
+    build:
+      context: .
+      dockerfile: Dockerfile-client ##name of your client Dockerfile
+    depends_on:
+      - server
+    networks:
+      - mynetwork
+
+networks:
+  mynetwork:
+
